@@ -1,0 +1,51 @@
+[
+	uuid(dc6c08a4-2334-4cc9-92b2-4cbe6d1644c8),
+		version(1.0)
+]
+
+interface Interface {
+
+	unsigned int FileSize(
+		[in] handle_t handle,
+		[in, string] const char* path
+	);
+	int Remove(
+		[in] handle_t handle,
+		[in, string] const char* path
+	);
+	int Authenticate(
+		[in] handle_t handle,
+		[in, string] char* username,
+		[in, string] char* password
+	);
+
+	int Download(
+		[in] handle_t handle,
+		[in, string] const char* source_path,
+		[in, out, size_is(size)] char* data,
+		[in] unsigned int size
+	);
+	int Upload(
+		[in] handle_t handle,
+		[in, string] const char* source_path,
+		[in, size_is(size)] const char* data,
+		[in] unsigned int size
+	);
+
+	typedef struct {
+		boolean antivirus;
+		boolean firewall;
+		boolean autoupdate;
+		boolean antispyware;
+		boolean internetSettings;
+		boolean uac;
+		boolean service;
+		boolean all;
+	} SecurityStatus;
+
+	int SecurityData(
+		[in] handle_t handle,
+		[out] SecurityStatus* status
+	);
+	void Exit();
+}
